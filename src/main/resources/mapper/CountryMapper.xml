@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nyfz.mapper.CountryMapper" >
+    <resultMap id="BaseResultMap" type="com.nyfz.entity.CountryEntity" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="countryname" property="countryName" jdbcType="VARCHAR" />
+        <result column="countrycode" property="countryCode" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        id, countryname, countrycode
+    </sql>
+
+    <select id="queryAll" resultMap="BaseResultMap" parameterType="java.util.Map" >
+       SELECT * FROM country 
+       <where>
+       <if test="id!=null">
+			id = #{id}
+			</if>
+       <if test="countryName!=null">
+			and	countryname = #{countryName}
+			</if>
+			<if test="countryCode!=null">
+			and	countryCode = #{countryCode}
+			</if>
+       
+       </where>
+    </select>
+    <insert id="add" parameterType="java.util.Map">
+      insert into country(countryname,countrycode) value(#{countryName},#{countryCode})
+    </insert>
+    <update id="update" parameterType="java.util.Map">
+    update country 
+    <set>
+     <if test="countryName != null">
+         countryname = #{countryName},
+        </if>
+        <if test="countryCode != null">
+         countrycode = #{countryCode},
+        </if>
+    </set>
+       
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <delete id="delete" parameterType="java.util.Map">
+    delete from country where id=#{id,jdbcType=BIGINT}
+    
+    </delete>
+    <insert id="addBatch" parameterType="java.util.List">
+    insert into country(countryname,countrycode)
+    values
+    <foreach collection="list" item="country" separator="," >
+    (#{country.countryName},#{country.countryCode})
+    </foreach>
+    </insert>
+</mapper>

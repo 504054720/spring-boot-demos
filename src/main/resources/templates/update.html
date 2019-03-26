@@ -1,0 +1,39 @@
+<script src="/static/js/jquery-1.11.1.min.js"></script>
+<script>
+$(function () {
+    $('#update').click(function () {
+    	var id=$("input[name='id']").val();
+    	var countryName=$("input[name='countryName']").val();
+    	var countryCode=$("input[name='countryCode']").val();
+    	var datas={"id":id,"countryName":countryName,"countryCode":countryCode};
+    	//alert(id+countryName+countryName+datas);
+    	 $.ajax({
+    		 type:"POST",
+    		 url:"/update",
+    		 contentType:"application/json",
+    		 dataType:'json',
+    		 async : true,
+    		 data:JSON.stringify(datas),
+    		 success:function(result){
+    	      alert("success");
+    	    }});
+    });
+});
+</script>
+<table >
+  <tr>
+    <th colspan="2">增加</th>
+  </tr>
+  <tr>
+  <input name="id" value="${country.id}" type="hidden">
+    <td>名称：</td>
+    <td><input name="countryName" value="${country.countryName}"></td>
+  </tr>
+   <tr>
+    <td>代码：</td>
+    <td><input name="countryCode" value="${country.countryCode}"></td>
+  </tr>
+   <tr>
+    <th colspan="2"><input type="button" name="submit" value="submit" id="update"></th>
+  </tr>
+</table>

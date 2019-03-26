@@ -1,0 +1,91 @@
+<script src="/static/js/jquery-1.11.1.min.js"></script>
+<script>
+$(function () {
+    $('#add').click(function () {
+    	var countryName=$("input[name='countryName']").val();
+    	var countryCode=$("input[name='countryCode']").val();
+    	//alert(countryName+countryName);
+    	 $.ajax({
+    		 url:"/addCountry/"+countryName+"/"+countryCode,
+    		 success:function(result){
+    	      alert("success");
+    	    }});
+    });
+});
+</script>
+<table >
+  <tr>
+    <th colspan="2">增加</th>
+  </tr>
+  <tr>
+    <td>名称：</td>
+    <td><input name="countryName"></td>
+  </tr>
+   <tr>
+    <td>代码：</td>
+    <td><input name="countryCode"></td>
+  </tr>
+   <tr>
+    <th colspan="2"><input type="button" name="submit" value="submit" id="add"></th>
+  </tr>
+</table>
+<hr/>
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Code</th>
+    <th>操作</th>
+  </tr>
+  <#list countryList as country>
+  <tr>
+    <td>${country.id}</td>
+    <td>${country.countryName}</td>
+    <td>${country.countryCode}</td>
+    <td><a href="/toUpdate/${country.id}">修改</a>&nbsp;&nbsp;&nbsp;<a href="/delete/${country.id}">删除</a></td>
+  </tr>
+  </#list>
+</table>
+
+<hr/>
+
+<form action="/upload" method="post" enctype="multipart/form-data">
+<table>
+  <tr>
+    <th colspan="2">附件上传</th>
+  </tr>
+  <tr>
+    <td><input type="file" name="fileName"></td>
+    <td><input type="submit" value="上传"></td>
+  </tr>
+</table>
+</form>
+<hr/>
+
+<form action="/uploadExecl" method="post" enctype="multipart/form-data">
+<table>
+  <tr>
+    <th colspan="2">EXECL导入</th>
+  </tr>
+  <tr>
+    <td><input type="file" name="execfile"></td>
+    <td><input type="submit" value="导入"></td>
+  </tr>
+</table>
+</form>
+
+<hr/>
+
+
+<table>
+  <tr>
+    <th colspan="2">EXECL导出</th>
+  </tr>
+  <tr>
+    <td><a href="/downExecl">导出</a></td><td>&nbsp;</td>
+  </tr>
+</table>
+
+
+
