@@ -1,19 +1,27 @@
 package com.nyfz.util.http;
 
+import java.io.File;
+import java.nio.charset.Charset;
 import java.util.Map;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class HttpService {
@@ -73,7 +81,5 @@ public class HttpService {
 		CloseableHttpResponse response = this.httpClient.execute(httpPost);
 		return new HttpResult(String.valueOf(response.getStatusLine().getStatusCode()),EntityUtils.toString(response.getEntity(), "UTF-8"));
 	}
-	
-	
 
 }
